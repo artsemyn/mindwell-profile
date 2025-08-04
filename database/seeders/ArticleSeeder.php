@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Post;
+use App\Models\Article;
 use App\Models\User;
 
-class ForumSeeder extends Seeder
+class ArticleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,13 +17,13 @@ class ForumSeeder extends Seeder
         $users = User::all();
 
         if ($users->isEmpty()) {
-            $this->command->info('Tidak ada user untuk membuat post forum. Jalankan UserSeeder terlebih dahulu.');
+            $this->command->info('Tidak ada user untuk membuat artikel. Jalankan UserSeeder terlebih dahulu.');
             return;
         }
 
-        Post::factory(20)->make()->each(function ($post) use ($users) {
-            $post->user_id = $users->random()->id;
-            $post->save();
+        Article::factory(15)->make()->each(function ($article) use ($users) {
+            $article->user_id = $users->random()->id;
+            $article->save();
         });
     }
 }

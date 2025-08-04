@@ -17,15 +17,7 @@ use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 | Halaman Publik (Dapat diakses semua orang)
 |--------------------------------------------------------------------------
 */
-// Public routes
 Route::get('/', [PageController::class, 'home'])->name('home');
-
-// Authenticated user routes
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/produk', [PageController::class, 'produk'])->name('produk');
 Route::get('/app', [PageController::class, 'app'])->name('app.features');
@@ -36,7 +28,8 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 Route::get('/articles', [PublicArticleController::class, 'index'])->name('articles.index');
 Route::get('/articles/{article:slug}', [PublicArticleController::class, 'show'])->name('articles.show');
 
-
+Route::get('/admin/login', [App\Http\Controllers\Admin\Auth\LoginController::class, 'create'])->name('admin.login');
+Route::post('/admin/login', [App\Http\Controllers\Admin\Auth\LoginController::class, 'store']);
 /*
 |--------------------------------------------------------------------------
 | Fitur yang Membutuhkan Login (Pengguna Biasa & Admin)
@@ -52,9 +45,9 @@ Route::middleware('auth')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| Rute Autentikasi (Login, Register, Dashboard, dll dari Breeze)
+| Rute Autentikasi (Login, Register, Dashboard, Profile, dll dari Breeze)
 |--------------------------------------------------------------------------
-| File ini mendefinisikan rute '/dashboard' yang Anda butuhkan.
+| File ini mendefinisikan rute '/dashboard', '/profile', dll. yang Anda butuhkan.
 */
 require __DIR__.'/auth.php';
 

@@ -1,8 +1,11 @@
 <?php
+// File: bootstrap/app.php (Modifikasi file yang sudah ada)
 
 use Illuminate\Foundation\Application;
-use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+// Tambahkan import ini
+use Illuminate\Auth\AuthenticationException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -16,5 +19,16 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        // ==================================================
+        // AWAL PERUBAHAN
+        // ==================================================
+        $exceptions->render(function (AuthenticationException $e, $request) {
+            if ($request->is('admin') || $request->is('admin/*')) {
+                return redirect()->guest(route('admin.login'));
+            }
+            return redirect()->guest(route('login'));
+        });
+        // ==================================================
+        // AKHIR PERUBAHAN
+        // ==================================================
     })->create();

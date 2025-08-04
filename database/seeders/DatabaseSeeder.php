@@ -7,11 +7,16 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    /**
+     * Seed the application's database.
+     */
     public function run(): void
     {
         $this->call([
             UserSeeder::class,
-            ForumSeeder::class, // Panggil seeder forum
+            ArticleSeeder::class,
+            ForumSeeder::class,
+            CommentSeeder::class,
         ]);
     }
 }
